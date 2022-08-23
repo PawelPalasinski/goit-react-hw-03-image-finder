@@ -1,5 +1,10 @@
+
+import MyLoader from "./Loader/Loader";
+
 export const App = () => {
   return (
+    <>
+      <MyLoader/>
     <div
       style={{
         height: '100vh',
@@ -11,6 +16,7 @@ export const App = () => {
       }}
     >
       React homework template
-    </div>
+      </div>
+      </>
   );
 };
