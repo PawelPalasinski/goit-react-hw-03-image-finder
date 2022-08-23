@@ -1,10 +1,10 @@
 
-import MyLoader from "./Loader/Loader";
+import SpinnerLoader from "./Loader/Loader";
 
 export const App = () => {
   return (
     <>
-      <MyLoader/>
+      <SpinnerLoader/>
     <div
       style={{
         height: '100vh',

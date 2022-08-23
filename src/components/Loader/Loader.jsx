@@ -1,7 +1,7 @@
 import { BallTriangle } from 'react-loader-spinner';
 import styles from './Loader.module.css';
 
-const MyLoader = () => {
+const SpinnerLoader = () => {
   return (
     <div className={styles.loader}>
       <BallTriangle
@@ -18,4 +18,4 @@ const MyLoader = () => {
   );
 };
 
-export default MyLoader;
+export default SpinnerLoader;
