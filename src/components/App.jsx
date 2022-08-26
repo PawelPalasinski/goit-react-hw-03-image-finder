@@ -1,88 +1,43 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
+// import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-import Notiflix from 'notiflix';
-import axios from 'axios';
-import apiPixabax from "./services/apiPixabay";
+// import Notiflix from 'notiflix';
+// import axios from 'axios';
+import fetchPixabayApi from './services/apiPixabay';
 
-import SpinnerLoader from "./Loader/Loader";
-
+// import SpinnerLoader from './Loader/Loader';
+import Searchbar from './Searchbar/Searchbar';
 
 class App extends Component {
   state = {
+    images: [],
     page: 1,
     name: '',
-  }
+  };
 
-  
-  fetchPics = () => {
-    const name = 'cat';
-    const page = this.page;
-    apiPixabax(name, page)
-    .then(name => {
-      let totalPages = name.totalHits;
+//   componentDidMount() {
+// console.log(fetchPixabayApi('cat'))
+//   }
 
-      if (name.hits.length > 0) {
-        Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
-        // renderGallery(name);
-        // new SimpleLightbox('.gallery a');
-        // closeBtn.style.display = 'block';
-        // closeBtn.addEventListener('click', () => {
-        //   gallery.innerHTML = '';
-        //   closeBtn.style.display = 'none';
-        // });
-
-        if (page < totalPages) {
-          // loadBtn.style.display = 'block';
-        } else {
-          // loadBtn.style.display = 'none';
-          Notiflix.Notify.info(
-            "We're sorry, but you've reached the end of search results."
-          );
-        }
-      } else {
-        Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-        // gallery.innerHTML = '';
-      }
-    })
-    .catch(error => console.log('ERROR: ' + error));
-  }
-  // a)piPixabax();
-
-
-  // componentDidMount() { 
+  // componentDidUpdate(prevState) {
 
   // }
 
-  // componentDidUpdate(prevState) { 
 
-  // }
 
-  render() { 
-  apiPixabax();
-    console.log("dziala");
-    this.fetchPics();
+
+  render() {
+    console.log('dziala');
+    // console.log(fetchPixabayApi())
+
     return (
-    <>
-      <SpinnerLoader/>
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-      </div>
+      <>
+        {/* <SpinnerLoader /> */}
+        <Searchbar onChange={this.formSubmit} />
+        <div>React homework template</div>
       </>
-    )
+    );
   }
 }
-
 
 export default App;
