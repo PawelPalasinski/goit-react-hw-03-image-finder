@@ -1,46 +1,61 @@
-import React, { Component } from 'react';
-import styles from './Searchbar/Searchbar.module.css';
+import React, { Component } from "react";
+import Notiflix from 'notiflix';
+// import './Searchbar.css';
+
+
 
 class Searchbar extends Component {
-  handleFormSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const input = form.elements.input.value;
-    return console.log(input);
-  };
+    state = {
+        name: '',
+        page: 1
+    }
 
-  render() {
-    return (
-      <header
-      className={styles.searchbar}
-      >
-        <form
-          onChange={this.handleFormSubmit}
-          className={styles.form}
-        >
-          <button
-            type="submit"
-            className={styles.button}
-          >
-            <span
-            className={styles.buttonLabel}
-            >
-              Search
-            </span>
-          </button>
+    handleChange = e => {
+        const { value } = e.currentTarget;
+        console.log(value);
 
-          <input
-            name="input"
-            className={styles.input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    );
-  }
+        this.setState({ name: value })
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+
+        if(this.state.name.trim() === '') {
+            Notiflix.failure('FAILURE MESSAGE');
+            return;
+        }
+
+        this.props.onSubmitHandler(this.state);
+
+        this.reset();
+    }
+
+    reset() {
+          this.setState({ name: '' })
+    }
+
+    render() {
+
+        return (
+            <header className="Searchbar">
+                <form className="SearchForm" onSubmit={ this.handleSubmit }>
+                    <button type="submit" className="SearchForm-button">
+                        <span className="SearchForm-button-label">Search</span>
+                    </button>
+
+                    <input
+                        className="SearchForm-input"
+                        type="text"
+                        onChange={ this.handleChange }
+                        autoComplete="off"
+                        autoFocus
+                        placeholder="Search images and photos"
+                    />
+                </form>
+            </header>
+
+        )
+    }
 }
 
 export default Searchbar;
