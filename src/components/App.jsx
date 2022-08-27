@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Modal from './Modal/Modal';
 import SpinnerLoader from './Loader/Loader';
-import axios from 'axios';
+// import axios from 'axios';
 import pixabayApi from './services/apiPixabay';
 
 class App extends Component {
@@ -29,11 +29,18 @@ class App extends Component {
     console.log('id: ', id);
   };
 
+
   getValue = data => {
     this.setState({ loading: true });
     // try {
-      const response = pixabayApi(data.name, data.page);
-      console.log('ODP: ', response);
+    const response = pixabayApi(data.name, data.page);
+    this.setState({ name: data.name })
+    console.log('ODP: ', response);
+    console.log('ODP name: ', data.name);
+    console.log('ODP page: ', data.page);
+    console.log('STATE name: ', this.state.name);
+    console.log('STATE page: ', this.state.page);
+    console.log('pixabay fn: ', pixabayApi);
 
     //   if (response.hits.length < 1) {
     //     throw new Error('dupa');
