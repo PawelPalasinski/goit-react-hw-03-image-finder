@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 class Modal extends Component {
 
     componentDidMount() {
-        window.addEventListener('keydown', this.handleKeyDown );
+        window.addEventListener('keydown', this.handleKeyDown);
+        console.log('modal wczytany');
     }
 
     componentWillUnmount() {
@@ -24,14 +25,15 @@ class Modal extends Component {
         }
     }
 
-
-  
   render() {
-        const { url, alt } = this.props;
+        const { url, alt} = this.props;
         return (
         <div className="Overlay" onClick={ this.handleBackdpropClick }>
                 <div className="Modal" >
-          <img src={url} alt={alt} />
+                    <img src={url}
+                        alt={alt}
+                    />
+                    <button onClick={this.handleBackdpropClick}>Close</button>
             </div>
           </div>
         )

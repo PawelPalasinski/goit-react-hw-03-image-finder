@@ -1,25 +1,12 @@
-// import PropTypes from 'prop-types';
-
-// import Notiflix from 'notiflix';
-// // import axios from 'axios';
-// import fetchPixabayApi from './services/apiPixabay';
-
-// import SpinnerLoader from './Loader/Loader';
-// import Searchbar from './Searchbar/Searchbar';
-// import ImageGallery from './ImageGallery/ImageGallery';
-// import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-// import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
-
 import React, { Component } from 'react';
-import Notiflix from 'notiflix';
-// import './App.css';
 import Searchbar from './Searchbar/Searchbar';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-import Modal from "./Modal/Modal";
+import Modal from './Modal/Modal';
 import SpinnerLoader from './Loader/Loader';
 import axios from 'axios';
+import pixabayApi from './services/apiPixabay';
 
 class App extends Component {
   state = {
@@ -28,70 +15,56 @@ class App extends Component {
     page: 1,
     showModal: false,
     loading: false,
-    tags: '',
     largeImageURL: '',
+    tags: '',
   };
 
-  toggleModal = () => {
+  toggleModal = (imageURL, tag, id) => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
+      largeImageURL: imageURL,
+      tags: tag,
     }));
+    console.log('modal', imageURL, 'tag', tag);
+    console.log('id: ', id);
   };
 
   getValue = data => {
-    console.log(data);
-    this.setState({ name: data.name, page: data.page });
-    const { name } = data;
-    const { page } = this.state;
-    const response = this.pixabayApi(name, page);
-    return response;
+    this.setState({ loading: true });
+    // try {
+      const response = pixabayApi(data.name, data.page);
+      console.log('ODP: ', response);
+
+    //   if (response.hits.length < 1) {
+    //     throw new Error('dupa');
+    //   }
+    //   this.setState({
+    //     hits: response.hits,
+    //     page: data.page + 1,
+    //   });
+    // } catch (error) {
+    //   this.setState({ hits: [], });
+    // } finally {
+    //   this.setState({
+    //     loading: false,
+    //   });
+    //   console.log('finally');
+    // }
+    // console.log('getValue: ', data);
+    // this.setState({ name: data.name, page: data.page });
+    // const { name } = data;
+    // const { page } = this.state;
+    // const response = this.getData(name, page);
+    // console.log('getValue: ', response)
+    // return response;
   };
 
-  async pixabayApi(name, page) {
-    this.setState({ loading: true });
-
-    const searchParams = new URLSearchParams({
-      image_type: 'photo',
-      orientation: 'horizontal',
-      safesearch: true,
-      per_page: 12,
-    });
-
-    const BASE_URL = 'https://pixabay.com/api/';
-    const API_KEY = '28143013-44919de38ad9e5402793063fb';
-
-    try {
-      const response = await axios(
-        `${BASE_URL}/?key=${API_KEY}&q=${name}&page=${page}&${searchParams}`
-      );
-      if (response.data.hits.length < 1) {
-        this.setState({ loading: false });
-        Notiflix.failure('FAILURE MESSAGE');
-        return;
-      }
-      console.log(response);
-      console.log(this.state.page);
-      this.setState({
-        loading: false,
-        hits: response.data.hits,
-        page: page + 1,
-      });
-      console.log(this.state.page);
-      return response.data.hits;
-    } catch (error) {
-      this.setState({ error });
-    }
-  }
+  // getData(name, page) {
+  // }
 
   render() {
-    const { hits,
-      showModal,
-      name,
-      page,
-      loading,
-      largeImageURL,
-      tags,
-    } = this.state;
+    const { hits, showModal, name, page, loading, largeImageURL, tags } =
+      this.state;
 
     return (
       <div>
@@ -105,7 +78,9 @@ class App extends Component {
           </ImageGallery>
         )}
 
-        {showModal && <Modal onClose={this.toggleModal} url={largeImageURL} alt={tags} />}
+        {showModal && (
+          <Modal onClose={this.toggleModal} url={largeImageURL} alt={tags} />
+        )}
 
         {hits.length > 0 && (
           <LoadMoreBtn onButtonClick={() => this.pixabayApi(name, page)} />
