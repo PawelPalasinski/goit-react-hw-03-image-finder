@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "LoadMoreBtn.module.scss"
+    ],
+    "names": [],
+    "file": "LoadMoreBtn.module.css"
+}

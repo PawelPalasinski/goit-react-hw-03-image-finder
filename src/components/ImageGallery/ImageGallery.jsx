@@ -1,5 +1,5 @@
 import { Component } from 'react';
-// import './ImageGallery.css';
+import styles from './ImageGallery.module.css'
 
 
 class ImageGallery extends Component {
@@ -8,7 +8,7 @@ class ImageGallery extends Component {
     
     render() {
     return (
-        <ul className="ImageGallery">
+        <ul className={styles.ImageGallery}>
             {this.props.children}
         </ul>
     )
