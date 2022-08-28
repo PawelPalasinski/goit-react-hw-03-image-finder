@@ -19,7 +19,7 @@ class Searchbar extends Component {
     e.preventDefault();
 
     if (this.state.name.trim() === '') {
-      Notiflix.Notify.failure('FAILURE MESSAGE');
+      Notiflix.Notify.failure('You have to enter something first to search for images!');
       return;
     }
 

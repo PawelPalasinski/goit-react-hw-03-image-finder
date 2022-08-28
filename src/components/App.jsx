@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Notiflix from 'notiflix';
 import { BASE_URL, API_KEY, SEARCH_PARAMS } from './utils/utils';
 import Searchbar from './Searchbar/Searchbar';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
@@ -38,13 +39,20 @@ class App extends Component {
         )
         .then(response => {
           if (!response.data.hits.length) {
-            throw new Error('No results');
-          }
-          this.setState(state => ({
-            hits: [...state.hits, ...response.data.hits],
+            Notiflix.Notify.failure('No images found!');
+          } else if (name === this.state.name) {
+            this.setState(state => ({
+              hits: [...state.hits, ...response.data.hits],
+              name: name,
+              page: state.page + 1,
+            }));
+          } else {
+            this.setState(state => ({
+            hits: response.data.hits,
             name: name,
             page: state.page + 1,
           }));
+          };
         });
     } catch (error) {
       console.error(error.message);

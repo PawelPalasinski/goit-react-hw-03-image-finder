@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
-// import './Modal.css';
+import styles from './Modal.module.css'
 
 class Modal extends Component {
 
@@ -28,12 +27,12 @@ class Modal extends Component {
   render() {
         const { url, alt} = this.props;
         return (
-        <div className="Overlay" onClick={ this.handleBackdpropClick }>
-                <div className="Modal" >
+            <div className={styles.Overlay} onClick={ this.handleBackdpropClick }>
+                <div className={styles.Modal} >
                     <img src={url}
                         alt={alt}
                     />
-                    <button onClick={this.handleBackdpropClick}>Close</button>
+                    <button className={styles.CloseBtn} onClick={this.handleBackdpropClick}>⛌</button>
             </div>
           </div>
         )

@@ -1,13 +1,15 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import './Button.css';
+import PropTypes from 'prop-types';
+import styles from './LoadMoreBtn.module.css'
 
 export default function LoadMoreBtn({ onButtonClick }) {
     return (
-        <button className='Button' type='button' onClick={ onButtonClick }>Load more</button>
+        <div className={styles.BtnContainer}>
+            <button className={styles.Button} type='button' onClick={onButtonClick}>Load more</button>
+        </div>
     )
 }
 
-// Button.propTypes = {
-//     onButtonClick: PropTypes.func,
-// }
+LoadMoreBtn.propTypes = {
+    onButtonClick: PropTypes.func,
+}
