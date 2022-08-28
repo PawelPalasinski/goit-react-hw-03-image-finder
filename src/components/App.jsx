@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { BASE_URL, API_KEY, SEARCH_PARAMS } from './utils/utils';
 import Searchbar from './Searchbar/Searchbar';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Modal from './Modal/Modal';
 import SpinnerLoader from './Loader/Loader';
-// import axios from 'axios';
-import pixabayApi from './services/apiPixabay';
 
 class App extends Component {
   state = {
@@ -29,49 +29,38 @@ class App extends Component {
     console.log('id: ', id);
   };
 
-
-  getValue = data => {
+  getValue = ({ name, page }) => {
     this.setState({ loading: true });
-    // try {
-    const response = pixabayApi(data.name, data.page);
-    this.setState({ name: data.name })
-    console.log('ODP: ', response);
-    console.log('ODP name: ', data.name);
-    console.log('ODP page: ', data.page);
-    console.log('STATE name: ', this.state.name);
-    console.log('STATE page: ', this.state.page);
-    console.log('pixabay fn: ', pixabayApi);
-
-    //   if (response.hits.length < 1) {
-    //     throw new Error('dupa');
-    //   }
-    //   this.setState({
-    //     hits: response.hits,
-    //     page: data.page + 1,
-    //   });
-    // } catch (error) {
-    //   this.setState({ hits: [], });
-    // } finally {
-    //   this.setState({
-    //     loading: false,
-    //   });
-    //   console.log('finally');
-    // }
-    // console.log('getValue: ', data);
-    // this.setState({ name: data.name, page: data.page });
-    // const { name } = data;
-    // const { page } = this.state;
-    // const response = this.getData(name, page);
-    // console.log('getValue: ', response)
-    // return response;
+    try {
+      axios
+        .get(
+          `${BASE_URL}?key=${API_KEY}&q=${name}&page=${page}&${SEARCH_PARAMS}`
+        )
+        .then(response => {
+          if (!response.data.hits.length) {
+            throw new Error('No results');
+          }
+          this.setState(state => ({
+            hits: response.data.hits,
+            name: name,
+            page: state.page + 1,
+          }));
+        });
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
-  // getData(name, page) {
-  // }
+  loadMore = () => {
+    this.getValue(this.state);
+  };
 
   render() {
-    const { hits, showModal, name, page, loading, largeImageURL, tags } =
-      this.state;
+    const { hits, showModal, loading, largeImageURL, tags } = this.state;
 
     return (
       <div>
@@ -90,7 +79,7 @@ class App extends Component {
         )}
 
         {hits.length > 0 && (
-          <LoadMoreBtn onButtonClick={() => this.pixabayApi(name, page)} />
+          <LoadMoreBtn onButtonClick={() => this.loadMore()} />
         )}
       </div>
     );

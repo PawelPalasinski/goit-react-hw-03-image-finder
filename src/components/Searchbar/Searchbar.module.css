@@ -36,6 +36,7 @@
 .Searchbar .SearchForm .SearchFormInput:focus {
   outline: 0;
   background: transparent;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .Searchbar .SearchForm .SearchFormButton {
@@ -46,15 +47,15 @@
   cursor: pointer;
   height: 40px;
   width: 40px;
-  color: #fff;
+  fill: rgba(255, 255, 255, 0.8);
   background: transparent;
   border-left: 1px solid #fff;
   border-radius: 0 3px 3px 0;
 }
 
 .Searchbar .SearchForm .SearchFormButton:hover {
-  background: #fff;
-  color: #444;
+  background: rgba(255, 255, 255, 0.8);
+  fill: #444;
 }
 
 .Searchbar .SearchForm .SearchFormButton:active {
