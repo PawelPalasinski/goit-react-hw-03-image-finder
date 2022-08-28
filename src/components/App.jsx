@@ -41,7 +41,7 @@ class App extends Component {
             throw new Error('No results');
           }
           this.setState(state => ({
-            hits: response.data.hits,
+            hits: [...state.hits, ...response.data.hits],
             name: name,
             page: state.page + 1,
           }));
