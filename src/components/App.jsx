@@ -26,8 +26,6 @@ class App extends Component {
       largeImageURL: imageURL,
       tags: tag,
     }));
-    console.log('modal', imageURL, 'tag', tag);
-    console.log('id: ', id);
   };
 
   getValue = ({ name, page }) => {
@@ -48,11 +46,11 @@ class App extends Component {
             }));
           } else {
             this.setState(state => ({
-            hits: response.data.hits,
-            name: name,
-            page: state.page + 1,
-          }));
-          };
+              hits: response.data.hits,
+              name: name,
+              page: state.page + 1,
+            }));
+          }
         });
     } catch (error) {
       console.error(error.message);
@@ -93,4 +91,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;

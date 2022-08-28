@@ -10,8 +10,6 @@ class Searchbar extends Component {
 
   handleChange = e => {
     const { value } = e.currentTarget;
-    console.log(value);
-
     this.setState({ name: value });
   };
 
@@ -19,7 +17,9 @@ class Searchbar extends Component {
     e.preventDefault();
 
     if (this.state.name.trim() === '') {
-      Notiflix.Notify.failure('You have to enter something first to search for images!');
+      Notiflix.Notify.failure(
+        'You have to enter something first to search for images!'
+      );
       return;
     }
 
