@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Notiflix from 'notiflix';
-import { BASE_URL, API_KEY, SEARCH_PARAMS } from './utils/utils';
+import { BASE_URL, API_KEY, SEARCH_PARAMS } from './../utils/constants';
 import Searchbar from './Searchbar/Searchbar';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ImageGallery from './ImageGallery/ImageGallery';
